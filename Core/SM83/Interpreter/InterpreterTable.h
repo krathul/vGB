@@ -1,8 +1,6 @@
 #ifndef INTERPRETER_TABLE_H
 #define INTERPRETER_TABLE_H
 
-#include "sm83.h"
-
 struct Interpreter;
 
 typedef void (*SM83Instruction)(struct Interpreter*);

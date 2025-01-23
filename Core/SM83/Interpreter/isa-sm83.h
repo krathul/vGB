@@ -1,4 +1,3 @@
-#include "Interpreter.h"
 #define DEFINE_INSTRUCTION(NAME, BODY) \
     static void NAME(struct Interpreter* interpreter) {\
         BODY; \

@@ -1,15 +1,20 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
-#include "sm83.h"
+#include "SM83/sm83.h"
 #include "InterpreterTable.h"
 
 #include <stdint.h>
 
+struct InterpreterComponent {
+    void (*init)(struct Interpreter*, struct InterpreterComponent*);
+    void (*deinit)(struct Interpreter*, struct InterpreterComponent*);
+};
+
 struct InterpreterMemory {
+    struct InterpreterComponent* m_component;
     uint8_t (*load8)(struct Interpreter*, uint16_t address);
     void (*store8)(struct Interpreter*, uint16_t address, uint8_t value);
-    void (*setActiveRegion)(struct Interpreter*, uint16_t address);
 };
 
 enum InterpreterCoreState {

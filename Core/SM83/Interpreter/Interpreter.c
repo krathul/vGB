@@ -37,24 +37,26 @@ sm83SingleStepInner(struct Interpreter* interpreter)
 }
 
 static void
-initCpu(struct SM83State* cpuState)
+initCPU(struct Interpreter* interpreter)
 {
-   cpuState->StateInit = &sm83StateInit;
-   cpuState->StateReset = &sm83StateReset;
+   struct SM83State* cpuState = &interpreter->cpuState;
+   cpuState->StateInit = sm83StateInit;
+   cpuState->StateReset = sm83StateReset;
 }
 
 static void
-initMemory(struct InterpreterMemory* memory)
+initMemory(struct Interpreter* interpreter)
 {
-
+    struct InterpreterMemory* memory = &interpreter->memory;
+    memory->m_component->init(interpreter, memory->m_component);
 }
 
 void
 initInterpreter(struct Interpreter* interpreter)
 {
     interpreter->isRunning = 1;
-    initCpu(&interpreter->cpuState);
-    initMemory(&interpreter->memory);
+    initCPU(interpreter);
+    initMemory(interpreter);
 
     interpreter->cpuState.StateInit(&interpreter->cpuState);
     interpreter->cycles = 0;
